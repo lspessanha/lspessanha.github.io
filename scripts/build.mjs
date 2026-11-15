@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import * as cheerio from 'cheerio';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -47,7 +48,9 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g
 function head(code) {
   const l = LOCALES[code];
   const url = BASE + l.path;
-  const image = `${BASE}/og/${code}.png`;
+  // Hash do arquivo na URL: LinkedIn e afins guardam a imagem pelo endereço, então ela muda quando a imagem muda
+  const ogHash = createHash('sha1').update(readFileSync(join(ROOT, 'og', `${code}.png`))).digest('hex').slice(0, 8);
+  const image = `${BASE}/og/${code}.png?v=${ogHash}`;
   const alternates = Object.entries(LOCALES)
     .map(([, o]) => `<link rel="alternate" hreflang="${o.htmlLang}" href="${BASE + o.path}" />`)
     .concat(`<link rel="alternate" hreflang="x-default" href="${BASE}/" />`);
