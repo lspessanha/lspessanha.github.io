@@ -27,3 +27,7 @@ for l in pt en es; do "$CHROME" --headless=new --hide-scrollbars --window-size=1
 ## Impressão
 
 O botão de impressão (ou Ctrl/Cmd+P) gera uma versão em formato de currículo A4 no idioma da página aberta, com o nome de arquivo sugerido "Currículo/Resume/Currículum - Leonardo Siqueira Pessanha".
+
+## Google Search Console
+
+O arquivo `google54f6d0ed8e73a575.html` na raiz verifica a propriedade no Search Console. Não remova.
