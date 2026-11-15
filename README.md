@@ -24,6 +24,14 @@ CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 for l in pt en es; do "$CHROME" --headless=new --hide-scrollbars --window-size=1200,630 --virtual-time-budget=3000 --screenshot="$PWD/og/$l.png" "file://$PWD/scripts/og.html#$l"; done
 ```
 
+Depois reduza cada PNG para 256 cores (fica com ~35 KB). Com o arquivo original, de ~75 KB, o LinkedIn exibia só uma miniatura borrada:
+
+```bash
+pip install pillow
+for l in pt en es; do python3 -c "import sys; from PIL import Image; Image.open(sys.argv[1]).convert('RGB').quantize(colors=256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(sys.argv[1], optimize=True)" og/$l.png; done
+npm run build
+```
+
 ## Impressão
 
 O botão de impressão (ou Ctrl/Cmd+P) gera uma versão em formato de currículo A4 no idioma da página aberta, com o nome de arquivo sugerido "Currículo/Resume/Currículum - Leonardo Siqueira Pessanha".
