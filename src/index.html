@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="pt-BR" data-accent="indigo" data-density="compact" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- @head: título, descrição, canonical, hreflang, Open Graph e JSON-LD são gerados por scripts/build.mjs -->
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preload" href="/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+<script>
+/* Aplica o tema antes da primeira pintura: escolha salva, senão a preferência do sistema */
+(function(){
+  var t = null;
+  try { t = localStorage.getItem('cv-theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+})();
+</script>
+<style>
+  @font-face{font-family:"Inter Tight";font-style:normal;font-weight:500 700;font-display:swap;src:url(/fonts/inter-tight.woff2) format("woff2");}
+  @font-face{font-family:"Inter Tight";font-style:italic;font-weight:500;font-display:swap;src:url(/fonts/inter-tight-italic.woff2) format("woff2");}
+  @font-face{font-family:"Inter";font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/inter.woff2) format("woff2");}
+  @font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400 500;font-display:swap;src:url(/fonts/jetbrains-mono.woff2) format("woff2");}
+  :root {
+    --paper:#faf8f4; --paper-2:#f2efe8; --paper-3:#ebe7dd;
+    --ink:#14130f; --ink-2:#3a3833; --ink-3:#5c5952; --ink-4:#a8a49a;
+    --rule:#e4dfd4; --rule-2:#d9d3c4; --card:#ffffff;
+    --accent:oklch(38% 0.02 270); --accent-soft:oklch(94% 0.01 270); --accent-ink:oklch(25% 0.02 270);
+    --font-display:"Inter Tight",ui-sans-serif,system-ui,sans-serif;
+    --font-body:"Inter",ui-sans-serif,system-ui,sans-serif;
+    --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sp:1;
+  }
+  [data-accent="indigo"]    {--accent:oklch(55% 0.14 265);--accent-soft:oklch(95% 0.03 265);--accent-ink:oklch(38% 0.12 265);}
+  [data-accent="terracotta"]{--accent:oklch(60% 0.13 40); --accent-soft:oklch(95% 0.03 40); --accent-ink:oklch(40% 0.11 40);}
+  [data-accent="forest"]    {--accent:oklch(52% 0.11 150);--accent-soft:oklch(95% 0.03 150);--accent-ink:oklch(36% 0.10 150);}
+  [data-accent="graphite"]  {--accent:oklch(38% 0.02 270);--accent-soft:oklch(94% 0.01 270);--accent-ink:oklch(20% 0.02 270);}
+  [data-accent="amber"]     {--accent:oklch(65% 0.13 75); --accent-soft:oklch(96% 0.03 75); --accent-ink:oklch(42% 0.11 75);}
+  [data-density="compact"]    {--sp:0.82;}
+  [data-density="comfortable"]{--sp:1;}
+  [data-density="spacious"]   {--sp:1.18;}
+  [data-theme="dark"] {
+    --paper:#111113;--paper-2:#17181b;--paper-3:#1d1e22;
+    --ink:#f1efe8;--ink-2:#c9c7c0;--ink-3:#8f8d86;--ink-4:#5b5a55;
+    --rule:#27282c;--rule-2:#34353b;--card:#1a1b1e;
+    --accent-soft:color-mix(in oklab,var(--accent) 22%,transparent);
+  }
+  /* Accent em tons claros no tema escuro, para manter contraste AA sobre o fundo */
+  [data-theme="dark"][data-accent="indigo"]    {--accent-ink:oklch(78% 0.11 265);}
+  [data-theme="dark"][data-accent="terracotta"]{--accent-ink:oklch(78% 0.10 40);}
+  [data-theme="dark"][data-accent="forest"]    {--accent-ink:oklch(78% 0.10 150);}
+  [data-theme="dark"][data-accent="graphite"]  {--accent-ink:oklch(82% 0.02 270);}
+  [data-theme="dark"][data-accent="amber"]     {--accent-ink:oklch(82% 0.11 75);}
+  /* --ink-4 é usado em texto secundário: tons ajustados para contraste >= 4.5:1 */
+  :root{--ink-4:#66625a;}
+  [data-theme="dark"]{--ink-4:#8b8982;}
+
+  .skip-link{
+    position:absolute;left:12px;top:-60px;z-index:200;padding:10px 16px;border-radius:10px;
+    background:var(--ink);color:var(--paper);font-weight:500;font-size:14px;transition:top .2s ease;
+  }
+  .skip-link:focus{top:12px;}
+  :focus-visible{outline:2px solid var(--accent-ink);outline-offset:3px;border-radius:6px;}
+  main:focus,section:focus{outline:none;}
+  nav.nav .lang-switch{display:flex;gap:2px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  @media (prefers-reduced-motion: reduce){
+    html,body{scroll-behavior:auto;}
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+    .stat:hover,.skill-card:hover,.edu-card:hover,.btn-primary:hover{transform:none;}
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;scroll-behavior:smooth;}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--font-body);font-size:16px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    font-feature-settings:"ss01","cv11";overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:var(--paper);}
+  a{color:inherit;text-decoration:none;}
+
+  /* ==== NAV ==== */
+  nav.nav{
+    position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;
+    display:flex;align-items:center;gap:6px;padding:6px;
+    background:color-mix(in oklab,var(--paper) 75%,transparent);
+    backdrop-filter:blur(14px) saturate(1.1);
+    border:1px solid var(--rule);border-radius:999px;
+    box-shadow:0 8px 24px -12px color-mix(in oklab,var(--ink) 20%,transparent);
+    transition:top .3s ease;
+    max-width:calc(100vw - 24px);
+  }
+  nav.nav .brand{
+    display:flex;align-items:center;gap:8px;padding:6px 10px 6px 14px;
+    font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:-0.015em;
+    color:var(--ink);white-space:nowrap;
+  }
+  nav.nav .sep{width:1px;height:18px;background:var(--rule);margin:0 2px;}
+  nav.nav a.link{
+    padding:7px 14px;border-radius:999px;font-size:13px;color:var(--ink-2);white-space:nowrap;
+    transition:background .2s ease,color .2s ease;cursor:pointer;
+    position:relative;
+  }
+  nav.nav a.link:hover{color:var(--ink);background:var(--paper-2);}
+  nav.nav a.link.active{background:var(--ink);color:var(--paper);}
+  nav.nav .utils{display:flex;gap:4px;padding-left:2px;border-left:1px solid var(--rule);margin-left:2px;}
+  nav.nav .util{
+    width:30px;height:30px;border-radius:999px;border:0;background:transparent;
+    color:var(--ink-2);cursor:pointer;display:grid;place-items:center;padding:0;
+    transition:background .2s ease,color .2s ease;
+    font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.05em;
+  }
+  nav.nav .util:hover{background:var(--paper-2);color:var(--ink);}
+  nav.nav button.util svg{width:14px;height:14px;}
+
+  /* Mobile menu toggle */
+  nav.nav .menu-btn{
+    display:none;width:32px;height:32px;border-radius:999px;border:0;
+    background:var(--ink);color:var(--paper);cursor:pointer;
+    align-items:center;justify-content:center;padding:0;margin-left:4px;
+  }
+  nav.nav .menu-btn svg{width:15px;height:15px;}
+  nav.nav .menu-btn .x{display:none;}
+  nav.nav[data-open="true"] .menu-btn .burger{display:none;}
+  nav.nav[data-open="true"] .menu-btn .x{display:block;}
+
+  @media(max-width:820px){
+    nav.nav{padding:6px 6px 6px 4px;gap:4px;}
+    nav.nav .brand{font-size:13px;padding:6px 8px 6px 10px;}
+    nav.nav .sep{display:none;}
+    nav.nav .menu-btn{display:inline-flex;}
+    nav.nav a.link{
+      display:none;
+    }
+    nav.nav[data-open="true"]{
+      left:12px;right:12px;transform:none;border-radius:18px;
+      flex-wrap:wrap;padding:10px;max-width:none;
+    }
+    nav.nav[data-open="true"] .brand{width:100%;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:4px;}
+    nav.nav[data-open="true"] a.link{
+      display:block;width:100%;padding:10px 14px;font-size:14px;border-radius:10px;
+    }
+    nav.nav[data-open="true"] .utils{
+      width:100%;border-left:0;border-top:1px solid var(--rule);
+      padding-left:0;margin-left:0;padding-top:8px;margin-top:4px;justify-content:flex-end;
+    }
+    nav.nav[data-open="true"] .menu-btn{
+      position:absolute;top:10px;right:10px;
+    }
+  }
+
+  /* ==== Layout containers ==== */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){ .wrap{padding:0 20px;} }
+
+  section{scroll-margin-top:88px;}
+
+  /* ==== HERO ==== */
+  .hero{
+    min-height:100vh;display:grid;align-items:center;
+    position:relative;overflow:hidden;
+    padding:120px 0 80px;
+  }
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;opacity:.55;pointer-events:none;
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 40%, transparent 75%);
+  }
+  .hero-glow{
+    position:absolute;z-index:0;pointer-events:none;
+    width:900px;height:900px;left:50%;top:60%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle, color-mix(in oklab,var(--accent) 12%,transparent) 0%, transparent 55%);
+  }
+  .hero-inner{position:relative;z-index:1;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:6px 14px 6px 10px;border-radius:999px;
+    background:var(--card);border:1px solid var(--rule);
+    font-family:var(--font-mono);font-size:11.5px;color:var(--ink-3);
+    letter-spacing:.04em;
+  }
+  .eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;background:oklch(62% 0.14 150);
+    box-shadow:0 0 0 4px color-mix(in oklab, oklch(62% 0.14 150) 22%, transparent);
+  }
+  h1.hero-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(40px, 9vw, 128px);line-height:0.95;letter-spacing:-0.04em;overflow-wrap:break-word;
+    margin:24px 0 0;text-wrap:balance;
+  }
+  h1.hero-title .rev{color:var(--ink-3);font-weight:500;}
+  h1.hero-title em{font-style:italic;font-weight:500;color:var(--accent-ink);font-family:var(--font-display);}
+  .hero-sub{
+    margin-top:28px;max-width:640px;
+    font-size:clamp(17px, 1.6vw, 20px);line-height:1.55;color:var(--ink-2);
+    text-wrap:pretty;
+  }
+  .hero-meta{
+    margin-top:32px;display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;
+    font-size:13.5px;color:var(--ink-3);
+  }
+  .hero-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--ink-4);}
+  .hero-ctas{
+    margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 20px;border-radius:999px;
+    font-family:var(--font-display);font-size:14px;font-weight:500;letter-spacing:-0.005em;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .15s ease,background .2s ease,border-color .2s ease,color .2s ease;
+  }
+  .btn svg{width:15px;height:15px;}
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px);background:var(--accent-ink);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule);}
+  .btn-ghost:hover{background:var(--paper-2);border-color:var(--rule-2);}
+
+  .scroll-hint{
+    position:absolute;left:50%;bottom:28px;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-2);display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .scroll-hint .bar{
+    width:1px;height:36px;background:linear-gradient(to bottom,var(--ink-4),transparent);
+    animation:scrollBar 2s ease-in-out infinite;transform-origin:top;
+  }
+  /* Em telas pequenas ou baixas o indicador sobrepõe os botões do topo */
+  @media (max-width:640px), (max-height:720px){ .scroll-hint{display:none;} }
+  @keyframes scrollBar{
+    0%{transform:scaleY(0.3);opacity:0;}
+    40%{transform:scaleY(1);opacity:1;}
+    100%{transform:scaleY(1);opacity:0;}
+  }
+
+  /* ==== Section heading ==== */
+  .sec{padding:calc(100px * var(--sp)) 0;}
+  .sec-head{
+    display:grid;grid-template-columns:auto 1fr;gap:48px;
+    align-items:end;margin-bottom:calc(56px * var(--sp));
+  }
+  .sec-kicker{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-4);
+  }
+  .sec-kicker .num{color:var(--accent-ink);margin-right:8px;}
+  .sec-title{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(34px, 4.8vw, 60px);line-height:1.02;letter-spacing:-0.03em;
+    margin:12px 0 0;text-wrap:balance;
+  }
+  .sec-lead{
+    font-size:17px;color:var(--ink-2);max-width:52ch;line-height:1.55;
+    text-wrap:pretty;justify-self:end;text-align:left;
+  }
+  @media(max-width:880px){
+    .sec-head{grid-template-columns:1fr;gap:24px;}
+    .sec-lead{justify-self:start;}
+  }
+
+  /* ==== ABOUT ==== */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:start;}
+  @media(max-width:880px){ .about-grid{grid-template-columns:1fr;gap:40px;} }
+  .about-lead{
+    font-family:var(--font-display);font-weight:500;
+    font-size:clamp(22px, 2.4vw, 30px);line-height:1.28;letter-spacing:-0.02em;
+    color:var(--ink);text-wrap:pretty;
+  }
+  .about-lead strong{color:var(--accent-ink);font-weight:600;}
+
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+  .stat{
+    padding:20px;border:1px solid var(--rule);border-radius:14px;background:var(--card);
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .stat:hover{border-color:var(--rule-2);transform:translateY(-2px);}
+  .stat-num{
+    font-family:var(--font-display);font-size:34px;font-weight:600;
+    letter-spacing:-0.03em;color:var(--ink);line-height:1;
+  }
+  .stat-num .unit{font-size:16px;color:var(--accent-ink);margin-left:4px;font-weight:500;}
+  .stat-label{margin-top:8px;font-size:13px;color:var(--ink-3);line-height:1.45;}
+
+  /* ==== EXPERIENCE timeline ==== */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{
+    content:"";position:absolute;left:6px;top:10px;bottom:10px;width:1px;
+    background:linear-gradient(to bottom, transparent, var(--rule) 10%, var(--rule) 90%, transparent);
+  }
+  .tl-item{position:relative;padding-bottom:56px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{
+    position:absolute;left:-28px;top:8px;
+    width:13px;height:13px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--ink-3);
+    box-shadow:0 0 0 4px var(--paper);
+  }
+  .tl-item.now .tl-dot{
+    border-color:var(--accent);background:var(--accent);
+    box-shadow:0 0 0 4px var(--paper);
+  }
+  .tl-period{
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;
+    color:var(--ink-4);text-transform:uppercase;margin-bottom:6px;
+  }
+  .tl-item.now .tl-period{color:var(--accent-ink);}
+  .tl-role{
+    font-family:var(--font-display);font-size:clamp(22px,2.2vw,28px);font-weight:600;
+    letter-spacing:-0.02em;margin:0;line-height:1.15;color:var(--ink);
+  }
+  .tl-company{
+    font-size:15.5px;color:var(--ink-2);margin-top:4px;
+    display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;
+  }
+  .tl-company .type{color:var(--ink-4);font-size:13px;}
+  .tl-company .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block;}
+  .tl-summary{
+    margin:16px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:68ch;
+  }
+  .tl-bullets{margin:16px 0 0;padding-left:0;list-style:none;}
+  .tl-bullets li{
+    padding:5px 0 5px 22px;position:relative;font-size:14.5px;color:var(--ink-2);
+    max-width:68ch;line-height:1.55;
+  }
+  .tl-bullets li::before{
+    content:"";position:absolute;left:4px;top:14px;width:8px;height:1px;background:var(--ink-4);
+  }
+  .tl-stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;}
+  .tl-stack .tag{
+    font-family:var(--font-mono);font-size:11.5px;padding:3px 9px;border-radius:5px;
+    background:var(--paper-2);color:var(--ink-2);border:1px solid var(--rule);
+  }
+
+  /* ==== SKILLS cards ==== */
+  .skills-grid{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:16px;
+  }
+  .skill-card{
+    background:var(--card);border:1px solid var(--rule);border-radius:16px;
+    padding:24px;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .skill-card:hover{border-color:var(--rule-2);transform:translateY(-2px);}
+  .skill-card h3{
+    font-family:var(--font-display);font-size:13.5px;font-weight:600;
+    margin:0 0 4px;letter-spacing:-0.005em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .skill-card h3 .ic{
+    width:22px;height:22px;border-radius:6px;background:var(--accent-soft);
+    color:var(--accent-ink);display:grid;place-items:center;
+    font-family:var(--font-mono);font-size:10px;font-weight:600;
+  }
+  .skill-card p.note{
+    margin:0 0 16px;font-size:12px;color:var(--ink-4);
+    font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;
+  }
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{
+    font-size:13px;padding:5px 11px;border-radius:6px;
+    background:var(--paper-2);color:var(--ink-2);border:1px solid var(--rule);line-height:1.4;
+  }
+  .tag.primary{
+    background:var(--ink);color:var(--paper);border-color:var(--ink);
+  }
+  [data-theme="dark"] .tag.primary{background:var(--ink);color:var(--paper);}
+
+  .sk-languages{grid-column:span 6;}
+  .sk-frontend{grid-column:span 6;}
+  .sk-backend{grid-column:span 7;}
+  .sk-platform{grid-column:span 5;}
+  .sk-leadership{grid-column:span 12;}
+  .sk-spoken{grid-column:span 12;}
+  @media(max-width:880px){
+    .skills-grid > *{grid-column:span 12 !important;}
+  }
+
+  .spoken{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+  .spoken-item{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:14px 16px;border:1px solid var(--rule);border-radius:10px;background:var(--paper-2);
+  }
+  .spoken-item .lang{font-family:var(--font-display);font-weight:600;font-size:15px;}
+  .spoken-item .lvl{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-3);}
+  @media(max-width:640px){ .spoken{grid-template-columns:1fr;} }
+
+  /* ==== CERTS ==== */
+  .cert-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  }
+  @media(max-width:820px){ .cert-grid{grid-template-columns:1fr;} }
+  .cert{
+    display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+    padding:20px 24px;border:1px solid var(--rule);border-radius:12px;
+    background:var(--card);transition:border-color .2s ease,background .2s ease;
+  }
+  .cert:hover{border-color:var(--rule-2);background:var(--paper-2);}
+  .cert-name{
+    font-family:var(--font-display);font-weight:500;font-size:15.5px;
+    letter-spacing:-0.005em;color:var(--ink);
+  }
+  .cert-issuer{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--ink-4);flex:none;
+    letter-spacing:.05em;
+  }
+
+  /* ==== EDUCATION ==== */
+  .edu-card{
+    display:grid;grid-template-columns:220px 1fr;gap:48px;align-items:start;
+    padding:36px 40px;border:1px solid var(--rule);border-radius:18px;
+    background:var(--card);
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .edu-card:hover{border-color:var(--rule-2);transform:translateY(-2px);}
+  .edu-left{border-right:1px solid var(--rule);padding-right:32px;}
+  .edu-year{
+    font-family:var(--font-display);font-weight:600;font-size:28px;
+    letter-spacing:-0.02em;color:var(--ink);line-height:1;
+  }
+  .edu-kind{
+    margin-top:10px;font-family:var(--font-mono);font-size:11px;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--accent-ink);
+  }
+  .edu-body h3.edu-degree{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(22px,2.4vw,30px);line-height:1.15;letter-spacing:-0.02em;
+    margin:0 0 8px;color:var(--ink);text-wrap:balance;
+  }
+  .edu-school{
+    font-size:17px;color:var(--ink-2);font-weight:500;margin-bottom:12px;
+  }
+  .edu-meta{
+    display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;
+    font-size:13.5px;color:var(--ink-3);
+  }
+  .edu-meta .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block;}
+  @media(max-width:820px){
+    .edu-card{grid-template-columns:1fr;gap:20px;padding:28px;}
+    .edu-left{border-right:0;border-bottom:1px solid var(--rule);padding-right:0;padding-bottom:20px;}
+  }
+
+  /* ==== CTA / contact ==== */
+  .cta{
+    padding:calc(120px * var(--sp)) 0;
+    background:
+      radial-gradient(ellipse 70% 100% at 50% 0%, color-mix(in oklab,var(--accent) 8%,transparent) 0%, transparent 60%),
+      var(--paper);
+    border-top:1px solid var(--rule);
+    text-align:center;
+  }
+  .cta h2{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(40px, 6.5vw, 90px);line-height:0.98;letter-spacing:-0.035em;
+    margin:0;text-wrap:balance;
+  }
+  .cta h2 em{font-style:italic;font-weight:500;color:var(--accent-ink);}
+  .cta p{
+    margin:20px auto 0;max-width:56ch;font-size:17px;color:var(--ink-2);line-height:1.55;
+  }
+  .cta-actions{
+    margin-top:44px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+  }
+
+  /* ==== Footer ==== */
+  footer.foot{
+    padding:28px 0;border-top:1px solid var(--rule);
+    font-family:var(--font-mono);font-size:11.5px;color:var(--ink-4);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  }
+
+  /* ==== Print: versão em formato de currículo (A4) ==== */
+  .print-header{display:none;}
+  @media print{
+    @page{size:A4;margin:13mm 15mm;}
+    html[data-theme],html[data-theme][data-accent]{
+      --paper:#fff;--paper-2:#fff;--card:#fff;--ink:#111;--ink-2:#262626;--ink-3:#454545;--ink-4:#555;
+      --rule:#bdbdbd;--rule-2:#bdbdbd;--accent:#111;--accent-ink:#111;--accent-soft:transparent;
+    }
+    *,*::before,*::after{box-shadow:none !important;text-shadow:none !important;transition:none !important;}
+    html,body{background:#fff;}
+    body{font-size:9.6pt;line-height:1.42;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    nav.nav,.skip-link,.hero,.sec-title,.sec-lead,.stats,.cta,footer.foot,
+    .sec-kicker .num,.skill-card .ic,.skill-card p.note,.edu-kind,.edu-meta,.tl-dot{display:none !important;}
+    .wrap{max-width:none;padding:0;}
+
+    .print-header{display:block;padding-bottom:7pt;margin-bottom:2pt;border-bottom:1.5pt solid #111;}
+    .print-header p{margin:0;}
+    .ph-name{font-family:var(--font-display);font-size:21pt;font-weight:700;letter-spacing:-0.02em;line-height:1.1;}
+    .ph-role{font-size:10pt;font-weight:500;margin-top:2pt !important;}
+    .ph-meta{font-size:8.8pt;color:#454545;margin-top:3pt !important;}
+
+    .sec{padding:0;margin-top:11pt;background:none !important;border:0 !important;}
+    .sec-head{display:block;margin:0 0 5pt;padding-bottom:2pt;border-bottom:.75pt solid #bdbdbd;break-after:avoid;}
+    .sec-kicker{font-family:var(--font-display);font-size:9.5pt;font-weight:700;letter-spacing:.1em;color:#111;}
+
+    .about-grid{display:block;}
+    .about-lead{font-family:var(--font-body);font-size:9.6pt;font-weight:400;line-height:1.45;letter-spacing:0;color:#262626;margin:0;}
+    .about-lead strong{color:#111;font-weight:600;}
+
+    .timeline{padding-left:0;}
+    .timeline::before{display:none;}
+    .tl-item{padding-bottom:9pt;}
+    .tl-period{font-size:8.2pt;margin:0;color:#454545 !important;}
+    .tl-role{font-size:11.5pt;line-height:1.2;break-after:avoid;}
+    .tl-company{font-size:9.6pt;margin-top:1pt;break-after:avoid;}
+    .tl-company .type{font-size:8.6pt;}
+    .tl-company .dot-sep{width:2.5pt;height:2.5pt;align-self:center;}
+    .tl-summary{font-size:9.4pt;margin-top:3pt;max-width:none;}
+    .tl-bullets{margin-top:3pt;}
+    .tl-bullets li{font-size:9.4pt;line-height:1.4;padding:1.2pt 0 1.2pt 11pt;max-width:none;break-inside:avoid;}
+    .tl-bullets li::before{left:1pt;top:7.6pt;width:5pt;background:#555;}
+    .tl-stack{display:block;margin-top:3pt;font-size:8.4pt;color:#454545;}
+    .tl-stack .tag{display:inline;border:0;padding:0;background:none;font-size:8.4pt;color:#454545;}
+    .tl-stack .tag:not(:last-child)::after{content:" · ";}
+
+    .skills-grid{display:block;}
+    .skill-card{border:0;border-radius:0;padding:0;margin:0 0 3pt;background:none;break-inside:avoid;}
+    .skill-card h3{display:inline;font-size:9.6pt;font-weight:600;margin:0;}
+    .skill-card h3::after{content:": ";}
+    .tag-cloud,.spoken{display:inline;}
+    .tag-cloud .tag,.tag-cloud .tag.primary{display:inline;border:0;padding:0;background:none;color:#262626;font-size:9.4pt;}
+    .tag-cloud .tag:not(:last-child)::after{content:", ";}
+    .spoken-item{display:inline;border:0;padding:0;background:none;}
+    .spoken-item .lang{font-family:var(--font-body);font-size:9.4pt;font-weight:400;}
+    .spoken-item .lvl{font-family:var(--font-body);font-size:9.4pt;color:#262626;text-transform:lowercase;}
+    .spoken-item .lang::after{content:" ";}
+    .spoken-item:not(:last-child)::after{content:" · ";}
+
+    .edu-card{display:flex;justify-content:space-between;align-items:baseline;gap:12pt;border:0;padding:0;border-radius:0;background:none;}
+    .edu-left{order:2;border:0;padding:0;}
+    .edu-year{font-size:9.4pt;font-weight:500;letter-spacing:0;}
+    .edu-body h3.edu-degree{font-size:10.5pt;margin:0;}
+    .edu-school{font-size:9.4pt;font-weight:400;margin:0;}
+
+    .cert-grid{display:block;}
+    .cert{display:inline;border:0;padding:0;background:none;}
+    .cert-name{font-family:var(--font-body);font-size:9.4pt;font-weight:400;}
+    .cert-issuer{font-family:var(--font-body);font-size:9.4pt;letter-spacing:0;color:#454545;}
+    .cert-issuer::before{content:" (";}
+    .cert-issuer::after{content:")";}
+    .cert:not(:last-child)::after{content:" · ";}
+  }
+</style>
+</head>
+<body>
+
+<!-- =================================================== NAV =================================================== -->
+<a class="skip-link" href="#conteudo"><span lang="en">Skip to content</span><span lang="pt">Pular para o conteúdo</span><span lang="es">Saltar al contenido</span></a>
+<nav class="nav" aria-label="{{ui.nav}}" data-open="false">
+  <a class="brand" href="#top">Leonardo Siqueira</a>
+  <span class="sep"></span>
+  <a class="link" data-link="about" href="#about"><span lang="en">About</span><span lang="pt">Sobre</span><span lang="es">Sobre mí</span></a>
+  <a class="link" data-link="experience" href="#experience"><span lang="en">Work</span><span lang="pt">Carreira</span><span lang="es">Trayectoria</span></a>
+  <a class="link" data-link="skills" href="#skills"><span lang="en">Skills</span><span lang="pt">Skills</span><span lang="es">Skills</span></a>
+  <a class="link" data-link="education" href="#education"><span lang="en">Education</span><span lang="pt">Formação</span><span lang="es">Formación</span></a>
+  <a class="link" data-link="certs" href="#certifications"><span lang="en">Courses</span><span lang="pt">Cursos</span><span lang="es">Cursos</span></a>
+  <a class="link" data-link="contact" href="#contact"><span lang="en">Contact</span><span lang="pt">Contato</span><span lang="es">Contacto</span></a>
+  <div class="utils">
+    <!-- @lang-switch -->
+    <button class="util" id="btn-theme" type="button" title="{{ui.theme}}" aria-label="{{ui.theme}}" aria-pressed="false">
+      <svg id="icon-sun" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <button class="util" id="btn-print" type="button" title="{{ui.print}}" aria-label="{{ui.print}}">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    </button>
+  </div>
+  <button class="menu-btn" id="btn-menu" type="button" aria-label="{{ui.menu}}" aria-expanded="false">
+    <svg aria-hidden="true" focusable="false" class="burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    <svg aria-hidden="true" focusable="false" class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+</nav>
+
+<main id="conteudo">
+<div class="print-header">
+  <p class="ph-name">Leonardo Siqueira Pessanha</p>
+  <p class="ph-role"><span lang="en">Product Specialist, Tech Lead &amp; Senior Full Stack Developer · Software Engineer &amp; Architect</span><span lang="pt">Especialista de Produto, Tech Lead e Desenvolvedor Full Stack Sênior · Engenheiro e Arquiteto de Software</span><span lang="es">Especialista de Producto, Tech Lead y Desarrollador Full Stack Senior · Ingeniero y Arquitecto de Software</span></p>
+  <p class="ph-meta"><span lang="en">São Paulo, Brazil</span><span lang="pt">São Paulo, Brasil</span><span lang="es">São Paulo, Brasil</span> · leonardosiqueira.dev.br · linkedin.com/in/leonardo-siqueira-pessanha · github.com/lspessanha</p>
+</div>
+<!-- =================================================== HERO =================================================== -->
+<section class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span lang="en">Product Specialist · Tech Lead · Senior Fullstack · São Paulo, Brazil</span>
+      <span lang="pt">Especialista de Produto · Tech Lead · Fullstack Sênior · São Paulo, Brasil</span><span lang="es">Especialista de Producto · Tech Lead · Fullstack Senior · São Paulo, Brasil</span>
+    </div>
+    <h1 class="hero-title">
+      <span lang="en">I build <em>large-scale</em><br/>software systems<br/><span class="rev">that reach millions.</span></span>
+      <span lang="pt">Construindo <em>sistemas</em><br/>em larga escala<br/><span class="rev">que chegam a milhões.</span></span><span lang="es">Construyendo <em>sistemas</em><br/>a gran escala<br/><span class="rev">que llegan a millones.</span></span>
+    </h1>
+    <p class="hero-sub">
+      <span lang="en">Tech Lead and Senior Full Stack Developer with 15+ years in technology, now also a Product Specialist, bringing product vision and engineering leadership together on digital-government platforms that impact millions of citizens.</span>
+      <span lang="pt">Tech Lead e Desenvolvedor Full Stack Sênior com mais de 15 anos em tecnologia, hoje também Especialista de Produto, unindo visão de produto e liderança técnica em plataformas de governo digital que impactam milhões de cidadãos.</span><span lang="es">Tech Lead y Desarrollador Full Stack Senior con más de 15 años en tecnología, hoy también Especialista de Producto, uniendo visión de producto y liderazgo técnico en plataformas de gobierno digital que impactan a millones de ciudadanos.</span>
+    </p>
+    <div class="hero-meta">
+      <span><strong style="color:var(--ink)">15+</strong> <span lang="en">years</span><span lang="pt">anos</span><span lang="es">años</span></span>
+      <span class="dot-sep"></span>
+      <span><strong style="color:var(--ink)">4+</strong> <span lang="en">years leading teams</span><span lang="pt">anos liderando times</span><span lang="es">años liderando equipos</span></span>
+      <span class="dot-sep"></span>
+      <span><span lang="en">Remote friendly</span><span lang="pt">Remoto</span><span lang="es">Remoto</span></span>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#experience">
+        <span lang="en">See my work</span><span lang="pt">Ver minha trajetória</span><span lang="es">Ver mi trayectoria</span>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#contact">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span lang="en">Get in touch</span><span lang="pt">Falar comigo</span><span lang="es">Hablemos</span>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span lang="en">Scroll</span><span lang="pt">Role</span><span lang="es">Desliza</span>
+    <div class="bar"></div>
+  </div>
+</section>
+
+<!-- =================================================== ABOUT =================================================== -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker"><span class="num">01</span><span lang="en">About</span><span lang="pt">Sobre</span><span lang="es">Sobre mí</span></div>
+        <h2 class="sec-title">
+          <span lang="en">Engineering that<br/>lasts under scale.</span>
+          <span lang="pt">Engenharia que<br/>resiste à escala.</span><span lang="es">Ingeniería que<br/>resiste la escala.</span>
+        </h2>
+      </div>
+      <p class="sec-lead">
+        <span lang="en">A short snapshot of how I think about the craft, where I've been, and what I bring to a team.</span>
+        <span lang="pt">Um resumo de como penso a engenharia, o caminho percorrido e o que entrego a um time.</span><span lang="es">Un resumen de cómo pienso la ingeniería, el camino recorrido y lo que aporto a un equipo.</span>
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <p class="about-lead" lang="en">
+        Tech Lead and Senior Full Stack Developer working on <strong>digital-government platforms</strong> that directly impact the lives of millions of citizens. At X-VIA I also act as a <strong>Product Specialist</strong>, combining product vision and technical leadership: I own the full development cycle, from concept to delivery, with architecture, stack and engineering decisions focused on <strong>quality, scalability and security</strong>, always balanced against cost and infrastructure constraints. I promote good practices, mentoring and alignment between technical and business areas.
+      </p>
+      <p class="about-lead" lang="pt">
+        Tech Lead e Desenvolvedor Full Stack Sênior com atuação em <strong>plataformas de governo digital</strong> que impactam diretamente a vida de milhões de cidadãos. Na X-VIA, acumulo o papel de <strong>Especialista de Produto</strong> e uno a visão de produto à liderança técnica: conduzo o ciclo completo de desenvolvimento, da concepção à entrega, com decisões de arquitetura, stack e engenharia focadas em <strong>qualidade, escalabilidade e segurança</strong>, sempre equilibradas com custo e infraestrutura. Promovo boas práticas, mentoria e alinhamento entre as áreas técnicas e de negócio.
+      </p><p class="about-lead" lang="es">
+        Tech Lead y Desarrollador Full Stack Senior con actuación en <strong>plataformas de gobierno digital</strong> que impactan directamente la vida de millones de ciudadanos. En X-VIA, también ejerzo el rol de <strong>Especialista de Producto</strong> y uno la visión de producto al liderazgo técnico: conduzco el ciclo completo de desarrollo, de la concepción a la entrega, con decisiones de arquitectura, stack e ingeniería enfocadas en <strong>calidad, escalabilidad y seguridad</strong>, siempre equilibradas con costo e infraestructura. Promuevo buenas prácticas, mentoría y alineación entre las áreas técnicas y de negocio.
+      </p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">15<span class="unit">+ <span lang="en">yrs</span><span lang="pt">anos</span><span lang="es">años</span></span></div>
+          <div class="stat-label"><span lang="en">Professional software experience</span><span lang="pt">Experiência em software</span><span lang="es">Experiencia en software</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4<span class="unit">+ <span lang="en">yrs</span><span lang="pt">anos</span><span lang="es">años</span></span></div>
+          <div class="stat-label"><span lang="en">Leading engineering teams</span><span lang="pt">Liderando times de engenharia</span><span lang="es">Liderando equipos de ingeniería</span></div>
+        </div>
+        <div class="stat" style="grid-column:span 2">
+          <div class="stat-num" style="font-size:22px;letter-spacing:-0.01em;line-height:1.2">
+            <span lang="en">Digital government · Public tenders</span>
+            <span lang="pt">Governo digital · Licitações públicas</span><span lang="es">Gobierno digital · Licitaciones públicas</span>
+          </div>
+          <div class="stat-label">
+            <span lang="en">Domains with platforms serving millions of users</span>
+            <span lang="pt">Domínios com plataformas atendendo milhões de usuários</span><span lang="es">Dominios con plataformas que atienden a millones de usuarios</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== EXPERIENCE =================================================== -->
+<section class="sec" id="experience" style="background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker"><span class="num">02</span><span lang="en">Work history</span><span lang="pt">Trajetória</span><span lang="es">Trayectoria</span></div>
+        <h2 class="sec-title">
+          <span lang="en">From support analyst<br/>to <em>Tech Lead</em>.</span>
+          <span lang="pt">De analista de suporte<br/>a <em>Tech Lead</em>.</span><span lang="es">De analista de soporte<br/>a <em>Tech Lead</em>.</span>
+        </h2>
+      </div>
+      <p class="sec-lead">
+        <span lang="en">Over a decade and a half of compound growth: each role built on the last, from operations to architecture, technical leadership and product.</span>
+        <span lang="pt">Mais de uma década e meia de crescimento composto: cada papel construído sobre o anterior, da operação à arquitetura, à liderança técnica e ao produto.</span><span lang="es">Más de una década y media de crecimiento compuesto: cada rol construido sobre el anterior, de la operación a la arquitectura, al liderazgo técnico y al producto.</span>
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item now">
+        <div class="tl-dot"></div>
+        <div class="tl-period">
+          <span lang="en">Apr 2022 – Present · Current role</span>
+          <span lang="pt">Abr 2022 – Presente · Cargo atual</span><span lang="es">Abr 2022 – Actualidad · Cargo actual</span>
+        </div>
+        <h3 class="tl-role" lang="en">Product Specialist &amp; Tech Lead</h3>
+        <h3 class="tl-role" lang="pt">Especialista de Produto &amp; Tech Lead</h3><h3 class="tl-role" lang="es">Especialista de Producto &amp; Tech Lead</h3>
+        <div class="tl-company">
+          X-VIA® Governo Digital
+          <span class="dot-sep"></span>
+          <span class="type" lang="en">Digital government · Millions of citizens</span>
+          <span class="type" lang="pt">Governo digital · Milhões de cidadãos</span><span class="type" lang="es">Gobierno digital · Millones de ciudadanos</span>
+        </div>
+        <p class="tl-summary">
+          <span lang="en">Joined as a Senior Developer, took on technical leadership as Tech Lead and now also act as Product Specialist, aligned with the Head and the CTO.</span>
+          <span lang="pt">Ingressei como Desenvolvedor Sênior, assumi a liderança técnica como Tech Lead e hoje acumulo o papel de Especialista de Produto, em alinhamento com o Head e o CTO.</span><span lang="es">Ingresé como Desarrollador Senior, asumí el liderazgo técnico como Tech Lead y hoy también ejerzo el rol de Especialista de Producto, en alineación con el Head y el CTO.</span>
+        </p>
+        <ul class="tl-bullets" lang="en">
+          <li>Lead tech leads and developers across several squads, working across the service teams allocated to our clients.</li>
+          <li>Drive product roadmap, prioritization and requirements gathering with clients, follow implementations and run training for clients and the internal technical team.</li>
+          <li>Evolve the digital-government platform, from the citizen services portal integrated with the mobile app to new digital and self-services for states and municipalities, on a shared engineering foundation (API gateway, libraries, design system, service templates and end-to-end observability).</li>
+          <li>Set engineering and quality standards, with documented architecture decisions, a shared CI/CD catalog covering code quality, security, deploy and accessibility, and Pull Request reviews.</li>
+          <li>Successfully led the production database migration and version upgrade of a state's identity and authentication layer, with thousands of active citizens, within a planned maintenance window.</li>
+          <li>Designed an event-driven architecture with Apache Kafka that gives traceability to the platform's digital services, including the Process API and the Audit API.</li>
+          <li>Technical reference for architecture decisions and critical production incidents; mentor developers, with mentees promoted, and helped structure the technical hiring process.</li>
+        </ul>
+        <ul class="tl-bullets" lang="pt">
+          <li>Lidero tech leads e desenvolvedores de diversas squads, atuando de forma transversal nos times de serviço alocados nos clientes.</li>
+          <li>Conduzo o roadmap, a priorização e o levantamento de requisitos com os clientes, acompanho as implantações e conduzo treinamentos para clientes e para o time técnico interno.</li>
+          <li>Evoluo a plataforma de governo digital, do portal de carta de serviços integrado ao aplicativo mobile a novos serviços digitais e autosserviços para estados e municípios, sobre uma base de engenharia compartilhada (gateway de APIs, bibliotecas, design system, templates de novos serviços e observabilidade de ponta a ponta).</li>
+          <li>Defino padrões de engenharia e qualidade, com decisões de arquitetura documentadas, um catálogo compartilhado de CI/CD que padroniza qualidade de código, segurança, deploy e acessibilidade, e revisões de Pull Requests.</li>
+          <li>Conduzi com êxito a migração do banco de dados de produção e a atualização de versão da camada de identidade e autenticação de um estado, com milhares de cidadãos ativos, dentro de uma janela de manutenção planejada.</li>
+          <li>Desenhei a arquitetura orientada a eventos com Apache Kafka que garante a rastreabilidade dos serviços digitais da plataforma, incluindo a API de Processos e a API de Auditoria.</li>
+          <li>Sou referência técnica nas decisões de arquitetura e nos incidentes críticos em produção, mentor de desenvolvedores, com mentorados promovidos, e ajudei a estruturar o processo seletivo técnico.</li>
+        </ul><ul class="tl-bullets" lang="es">
+          <li>Lidero tech leads y desarrolladores de diversos squads, actuando de forma transversal en los equipos de servicio asignados a los clientes.</li>
+          <li>Conduzco el roadmap, la priorización y el levantamiento de requisitos con los clientes, acompaño las implementaciones y conduzco capacitaciones para clientes y para el equipo técnico interno.</li>
+          <li>Evoluciono la plataforma de gobierno digital, desde el portal de carta de servicios integrado a la aplicación móvil hasta nuevos servicios digitales y autoservicios para estados y municipios, sobre una base de ingeniería compartida (gateway de APIs, bibliotecas, design system, plantillas de nuevos servicios y observabilidad de punta a punta).</li>
+          <li>Defino estándares de ingeniería y calidad, con decisiones de arquitectura documentadas, un catálogo compartido de CI/CD que estandariza calidad de código, seguridad, despliegue y accesibilidad, y revisiones de Pull Requests.</li>
+          <li>Conduje con éxito la migración de la base de datos de producción y la actualización de versión de la capa de identidad y autenticación de un estado, con miles de ciudadanos activos, dentro de una ventana de mantenimiento planificada.</li>
+          <li>Diseñé la arquitectura orientada a eventos con Apache Kafka que garantiza la trazabilidad de los servicios digitales de la plataforma, incluyendo la API de Procesos y la API de Auditoría.</li>
+          <li>Soy referencia técnica en las decisiones de arquitectura y en los incidentes críticos en producción, mentor de desarrolladores, con mentoreados promovidos, y ayudé a estructurar el proceso de selección técnica.</li>
+        </ul>
+        <div class="tl-stack">
+          <span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">NestJS</span>
+          <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Vue</span>
+          <span class="tag">PostgreSQL</span><span class="tag">Kafka</span><span class="tag">Keycloak</span>
+          <span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">Kubernetes</span><span class="tag">GitLab CI</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">
+          <span lang="en">Nov 2017 – Apr 2022 · ~4.5 yrs</span>
+          <span lang="pt">Nov 2017 – Abr 2022 · ~4,5 anos</span><span lang="es">Nov 2017 – Abr 2022 · ~4,5 años</span>
+        </div>
+        <h3 class="tl-role" lang="en">Programmer Analyst → Senior Developer Analyst III</h3>
+        <h3 class="tl-role" lang="pt">Analista Programador → Analista Desenvolvedor Sênior III</h3><h3 class="tl-role" lang="es">Analista Programador → Analista Desarrollador Senior III</h3>
+        <div class="tl-company">
+          ConLicitação
+          <span class="dot-sep"></span>
+          <span class="type" lang="en">GovTech · Public tenders</span>
+          <span class="type" lang="pt">GovTech · Licitações públicas</span><span class="type" lang="es">GovTech · Licitaciones públicas</span>
+        </div>
+        <p class="tl-summary">
+          <span lang="en">Platform that publishes and monitors public tenders for government suppliers. Grew from Programmer Analyst (2017) to Mid-level (2019), Senior (2020) and Senior Developer Analyst III (2021–2022).</span>
+          <span lang="pt">Plataforma de divulgação e monitoramento de licitações públicas para fornecedores do governo. Evoluí de Analista Programador (2017) para Pleno (2019), Sênior (2020) e Analista Desenvolvedor Sênior III (2021–2022).</span><span lang="es">Plataforma de divulgación y monitoreo de licitaciones públicas para proveedores del gobierno. Evolucioné de Analista Programador (2017) a Semi Senior (2019), Senior (2020) y Analista Desarrollador Senior III (2021–2022).</span>
+        </p>
+        <ul class="tl-bullets" lang="en">
+          <li>Technical reference for the team, worked with the IT manager on strategic decisions and planning, and led production crisis resolution end to end, from indexing MySQL columns that degraded the whole platform to caching strategies.</li>
+          <li>Built the Document Management and Authentication (GED) module, introducing a Node.js/Express backend into a Ruby on Rails, React and PHP stack, with PDF handling, notary API integration and digital certificates.</li>
+          <li>Built extractors that automate the capture of tender notices from portals of many technologies, from API integrations to web scraping with Selenium, and worked on the Market Analysis module (price database/BI) with Elasticsearch and a MySQL data lake.</li>
+          <li>Built a Lumen-PHP API and a mobile API with JWT authentication, and led the Boletim Web migration from Rails 4 to Rails 6.</li>
+        </ul>
+        <ul class="tl-bullets" lang="pt">
+          <li>Fui referência técnica do time, atuei com o gerente de TI nas decisões estratégicas e no planejamento e liderei a resolução de crises em produção, da criação de índices em colunas MySQL que degradavam toda a plataforma à adoção de estratégias de cache.</li>
+          <li>Desenvolvi o módulo de Gerenciamento e Autenticação de Documentos (GED), introduzindo um backend em Node.js com Express numa stack até então baseada em Ruby on Rails, React e PHP, com manipulação de PDFs, integração com API de cartório e certificado digital.</li>
+          <li>Construí extratores que automatizam a captura de avisos de licitação em portais de diversas tecnologias, de integrações via API a web scraping com Selenium, e atuei no módulo de Análise de Mercado (banco de preços/BI) com Elasticsearch e data lake em MySQL.</li>
+          <li>Construí uma API em Lumen-PHP e uma API para mobile com autenticação JWT, e conduzi a migração do Boletim Web de Rails 4 para Rails 6.</li>
+        </ul><ul class="tl-bullets" lang="es">
+          <li>Fui referencia técnica del equipo, trabajé con el gerente de TI en las decisiones estratégicas y en la planificación, y lideré la resolución de crisis en producción, desde la creación de índices en columnas MySQL que degradaban toda la plataforma hasta la adopción de estrategias de caché.</li>
+          <li>Desarrollé el módulo de Gestión y Autenticación de Documentos (GED), introduciendo un backend en Node.js con Express en un stack hasta entonces basado en Ruby on Rails, React y PHP, con manipulación de PDFs, integración con API de notaría y certificado digital.</li>
+          <li>Construí extractores que automatizan la captura de avisos de licitación en portales de diversas tecnologías, desde integraciones vía API hasta web scraping con Selenium, y trabajé en el módulo de Análisis de Mercado (banco de precios/BI) con Elasticsearch y data lake en MySQL.</li>
+          <li>Construí una API en Lumen-PHP y una API móvil con autenticación JWT, y conduje la migración del Boletim Web de Rails 4 a Rails 6.</li>
+        </ul>
+        <div class="tl-stack">
+          <span class="tag">Node.js</span><span class="tag">Express</span>
+          <span class="tag">Ruby on Rails</span><span class="tag">PHP / Lumen</span>
+          <span class="tag">React</span><span class="tag">MySQL</span>
+          <span class="tag">Redis</span><span class="tag">Elasticsearch</span>
+          <span class="tag">Selenium</span><span class="tag">RabbitMQ</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">
+          <span lang="en">2018 · Freelance · Featured project</span>
+          <span lang="pt">2018 · Freelance · Projeto em destaque</span><span lang="es">2018 · Freelance · Proyecto destacado</span>
+        </div>
+        <h3 class="tl-role" lang="en">Developer · Projeto Mago</h3>
+        <h3 class="tl-role" lang="pt">Desenvolvedor · Projeto Mago</h3><h3 class="tl-role" lang="es">Desarrollador · Projeto Mago</h3>
+        <div class="tl-company">
+          Freelance
+          <span class="dot-sep"></span>
+          <span class="type" lang="en">Sales analytics · CRM integration</span>
+          <span class="type" lang="pt">Análise de vendas · Integração com CRM</span><span class="type" lang="es">Análisis de ventas · Integración con CRM</span>
+        </div>
+        <ul class="tl-bullets" lang="en">
+          <li>Built a Ruby API integrating with RD Station, with OO principles, JSON serialization, manual pagination, logging, email delivery and exception handling.</li>
+          <li>Built "Mago Backend" (Rails 5 API + MySQL, from Jan 2020): a sales KPI dashboard with performance, customer segmentation, order-to-customer geolocation, demand forecasting and average ticket.</li>
+          <li>Modeled the database, implemented authentication with Rack-Cors and scheduled Rake jobs, and set up the AWS production environment from scratch: EC2, ECS + Fargate, ELB, RDS, S3 and CloudFront.</li>
+          <li>Handled the Rails 6 migration, resolving deprecated gem dependencies and a DNS rebinding vulnerability.</li>
+        </ul>
+        <ul class="tl-bullets" lang="pt">
+          <li>Desenvolvi uma API em Ruby de integração com o RD Station, aplicando princípios de OO, serialização de JSON, paginação manual, logs, envio de e-mails e tratamento de exceções.</li>
+          <li>Construí o "Mago Backend" (Rails 5 API + MySQL, a partir de jan/2020): dashboard de KPIs de vendas com performance, segmentação de clientes, geolocalização pedido-cliente, previsão de demanda e ticket médio.</li>
+          <li>Modelei o banco de dados, implementei autenticação com Rack-Cors e jobs agendados com Rake, e montei do zero o ambiente de produção na AWS: EC2, ECS + Fargate, ELB, RDS, S3 e CloudFront.</li>
+          <li>Conduzi a migração para Rails 6, resolvendo dependências de gems depreciadas e uma vulnerabilidade de DNS rebinding.</li>
+        </ul><ul class="tl-bullets" lang="es">
+          <li>Desarrollé una API en Ruby de integración con RD Station, aplicando principios de OO, serialización de JSON, paginación manual, logs, envío de correos y manejo de excepciones.</li>
+          <li>Construí el "Mago Backend" (Rails 5 API + MySQL, desde ene/2020): dashboard de KPIs de ventas con rendimiento, segmentación de clientes, geolocalización pedido-cliente, previsión de demanda y ticket promedio.</li>
+          <li>Modelé la base de datos, implementé autenticación con Rack-Cors y jobs programados con Rake, y monté desde cero el entorno de producción en AWS: EC2, ECS + Fargate, ELB, RDS, S3 y CloudFront.</li>
+          <li>Conduje la migración a Rails 6, resolviendo dependencias de gems obsoletas y una vulnerabilidad de DNS rebinding.</li>
+        </ul>
+        <div class="tl-stack">
+          <span class="tag">Ruby</span><span class="tag">Rails 5 API</span><span class="tag">MySQL</span>
+          <span class="tag">RD Station</span><span class="tag">AWS</span><span class="tag">ECS + Fargate</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">
+          <span lang="en">Jan 2012 – Nov 2017 · ~5.5 yrs</span>
+          <span lang="pt">Jan 2012 – Nov 2017 · ~5,5 anos</span><span lang="es">Ene 2012 – Nov 2017 · ~5,5 años</span>
+        </div>
+        <h3 class="tl-role" lang="en">System Support &amp; Publications Analyst</h3>
+        <h3 class="tl-role" lang="pt">Analista de Suporte &amp; Publicações</h3><h3 class="tl-role" lang="es">Analista de Soporte &amp; Publicaciones</h3>
+        <div class="tl-company">ConLicitação</div>
+        <p class="tl-summary">
+          <span lang="en">Support and maintenance of internal systems, process automation and content-publishing operations: the foundation that opened the path into software engineering.</span>
+          <span lang="pt">Suporte e manutenção de sistemas internos, automação de processos e operações de publicação de conteúdo: a base que abriu o caminho para a engenharia de software.</span><span lang="es">Soporte y mantenimiento de sistemas internos, automatización de procesos y operaciones de publicación de contenido: la base que abrió el camino hacia la ingeniería de software.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== SKILLS =================================================== -->
+<section class="sec" id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker"><span class="num">03</span><span lang="en">Capabilities</span><span lang="pt">Competências</span><span lang="es">Competencias</span></div>
+        <h2 class="sec-title">
+          <span lang="en">The stack,<br/>and what I do with it.</span>
+          <span lang="pt">A stack,<br/>e o que faço com ela.</span><span lang="es">El stack,<br/>y lo que hago con él.</span>
+        </h2>
+      </div>
+      <p class="sec-lead">
+        <span lang="en">Hands-on across the stack: strongest on the backend and platform layers, confident everywhere in between, and now connecting it all to product.</span>
+        <span lang="pt">Atuação hands-on em toda a stack: mais forte em backend e plataforma, confortável em tudo que existe entre as pontas, e hoje conectando tudo isso ao produto.</span><span lang="es">Actuación hands-on en todo el stack: más fuerte en backend y plataforma, cómodo en todo lo que hay entre los extremos, y hoy conectando todo eso al producto.</span>
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card sk-languages">
+        <h3><span class="ic">&lt;/&gt;</span> <span lang="en">Languages &amp; core</span><span lang="pt">Linguagens &amp; core</span><span lang="es">Lenguajes &amp; core</span></h3>
+        <p class="note"><span lang="en">Daily drivers</span><span lang="pt">Uso diário</span><span lang="es">Uso diario</span></p>
+        <div class="tag-cloud">
+          <span class="tag primary">TypeScript</span>
+          <span class="tag primary">Node.js</span>
+          <span class="tag primary">JavaScript</span>
+          <span class="tag">Python</span>
+          <span class="tag">Ruby on Rails</span>
+          <span class="tag">PHP / Laravel</span>
+        </div>
+      </div>
+
+      <div class="skill-card sk-frontend">
+        <h3><span class="ic">UI</span> <span lang="en">Frontend</span><span lang="pt">Frontend</span><span lang="es">Frontend</span></h3>
+        <p class="note"><span lang="en">Web &amp; native</span><span lang="pt">Web &amp; native</span><span lang="es">Web &amp; nativo</span></p>
+        <div class="tag-cloud">
+          <span class="tag primary">React</span>
+          <span class="tag primary">Next.js</span>
+          <span class="tag">Vue</span>
+          <span class="tag">Vite</span>
+          <span class="tag">React Native / Expo</span>
+          <span class="tag">Micro-frontends</span>
+          <span class="tag">WCAG</span>
+        </div>
+      </div>
+
+      <div class="skill-card sk-backend">
+        <h3><span class="ic">API</span> <span lang="en">Backend &amp; data</span><span lang="pt">Backend &amp; dados</span><span lang="es">Backend &amp; datos</span></h3>
+        <p class="note"><span lang="en">Where I spend most of my time</span><span lang="pt">Onde passo a maior parte do tempo</span><span lang="es">Donde paso la mayor parte del tiempo</span></p>
+        <div class="tag-cloud">
+          <span class="tag primary">NestJS</span>
+          <span class="tag primary">Express</span>
+          <span class="tag primary">PostgreSQL</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Redis</span>
+          <span class="tag">Kafka</span>
+          <span class="tag">RabbitMQ</span>
+          <span class="tag">SQS</span>
+          <span class="tag">BullMQ</span>
+          <span class="tag">Elasticsearch</span>
+          <span class="tag">Prisma</span>
+          <span class="tag">TypeORM</span>
+          <span class="tag">Directus</span>
+          <span class="tag">Keycloak / SSO</span>
+          <span class="tag">GovBR</span>
+        </div>
+      </div>
+
+      <div class="skill-card sk-platform">
+        <h3><span class="ic">∞</span> <span lang="en">Platform</span><span lang="pt">Plataforma</span><span lang="es">Plataforma</span></h3>
+        <p class="note"><span lang="en">Cloud &amp; delivery</span><span lang="pt">Cloud &amp; entrega</span><span lang="es">Cloud &amp; entrega</span></p>
+        <div class="tag-cloud">
+          <span class="tag primary">AWS</span>
+          <span class="tag">GCP</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Docker</span>
+          <span class="tag">GitLab CI</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">KrakenD</span>
+          <span class="tag">Backstage</span>
+          <span class="tag">SonarQube</span>
+          <span class="tag">OpenBao</span>
+          <span class="tag">OpenTelemetry</span>
+          <span class="tag">SigNoz</span>
+          <span class="tag">PostHog</span>
+        </div>
+      </div>
+
+      <div class="skill-card sk-leadership">
+        <h3><span class="ic">★</span> <span lang="en">Leadership &amp; craft</span><span lang="pt">Liderança &amp; ofício</span><span lang="es">Liderazgo &amp; oficio</span></h3>
+        <p class="note"><span lang="en">How I work with people &amp; systems</span><span lang="pt">Como trabalho com pessoas &amp; sistemas</span><span lang="es">Cómo trabajo con personas &amp; sistemas</span></p>
+        <div class="tag-cloud">
+          <span lang="en" class="tag">Team leadership</span><span lang="pt" class="tag">Liderança de times</span><span lang="es" class="tag">Liderazgo de equipos</span>
+          <span lang="en" class="tag">Product roadmap</span><span lang="pt" class="tag">Roadmap de produto</span><span lang="es" class="tag">Roadmap de producto</span>
+          <span lang="en" class="tag">Requirements &amp; discovery</span><span lang="pt" class="tag">Requisitos &amp; discovery</span><span lang="es" class="tag">Requisitos &amp; discovery</span>
+          <span lang="en" class="tag">Client implementations</span><span lang="pt" class="tag">Implantações em clientes</span><span lang="es" class="tag">Implementaciones en clientes</span>
+          <span lang="en" class="tag">Client &amp; team training</span><span lang="pt" class="tag">Treinamentos</span><span lang="es" class="tag">Capacitaciones</span>
+          <span lang="en" class="tag">Hiring &amp; interviewing</span><span lang="pt" class="tag">Contratação &amp; entrevistas</span><span lang="es" class="tag">Contratación &amp; entrevistas</span>
+          <span lang="en" class="tag">Mentoring</span><span lang="pt" class="tag">Mentoria</span><span lang="es" class="tag">Mentoría</span>
+          <span lang="en" class="tag">Incident troubleshooting</span><span lang="pt" class="tag">Troubleshooting de incidentes</span><span lang="es" class="tag">Troubleshooting de incidentes</span>
+          <span lang="en" class="tag">Architecture reviews</span><span lang="pt" class="tag">Revisão de arquitetura</span><span lang="es" class="tag">Revisión de arquitectura</span>
+          <span lang="en" class="tag">Pull Request reviews</span><span lang="pt" class="tag">Revisão de Pull Requests</span><span lang="es" class="tag">Revisión de Pull Requests</span>
+          <span lang="en" class="tag">Agile / Scrum facilitation</span><span lang="pt" class="tag">Facilitação Ágil / Scrum</span><span lang="es" class="tag">Facilitación Ágil / Scrum</span>
+          <span lang="en" class="tag">Stakeholder management</span><span lang="pt" class="tag">Gestão de stakeholders</span><span lang="es" class="tag">Gestión de stakeholders</span>
+          <span lang="en" class="tag">Performance reviews</span><span lang="pt" class="tag">Avaliação de desempenho</span><span lang="es" class="tag">Evaluación de desempeño</span>
+        </div>
+      </div>
+
+      <div class="skill-card sk-spoken">
+        <h3><span class="ic">A</span> <span lang="en">Spoken languages</span><span lang="pt">Idiomas</span><span lang="es">Idiomas</span></h3>
+        <p class="note"><span lang="en">How I communicate</span><span lang="pt">Como me comunico</span><span lang="es">Cómo me comunico</span></p>
+        <div class="spoken">
+          <div class="spoken-item">
+            <span class="lang"><span lang="en">Portuguese (BR)</span><span lang="pt">Português (BR)</span><span lang="es">Portugués (BR)</span></span>
+            <span class="lvl"><span lang="en">NATIVE</span><span lang="pt">NATIVO</span><span lang="es">NATIVO</span></span>
+          </div>
+          <div class="spoken-item">
+            <span class="lang"><span lang="en">English</span><span lang="pt">Inglês</span><span lang="es">Inglés</span></span>
+            <span class="lvl"><span lang="en">BASIC – INTERMEDIATE</span><span lang="pt">BÁSICO – INTERMEDIÁRIO</span><span lang="es">BÁSICO – INTERMEDIO</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== EDUCATION =================================================== -->
+<section class="sec" id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker"><span class="num">04</span><span lang="en">Education</span><span lang="pt">Formação acadêmica</span><span lang="es">Formación académica</span></div>
+        <h2 class="sec-title">
+          <span lang="en">Where the<br/><em>fundamentals</em> came from.</span>
+          <span lang="pt">Onde os<br/><em>fundamentos</em> começaram.</span><span lang="es">Donde comenzaron<br/>los <em>fundamentos</em>.</span>
+        </h2>
+      </div>
+      <p class="sec-lead">
+        <span lang="en">Formal training that set the base for everything after: algorithms, architecture and the discipline of engineering.</span>
+        <span lang="pt">Formação que estabeleceu a base para tudo o que veio depois: algoritmos, arquitetura e a disciplina da engenharia.</span><span lang="es">Formación que estableció la base para todo lo que vino después: algoritmos, arquitectura y la disciplina de la ingeniería.</span>
+      </p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-left">
+        <div class="edu-year">2016 – 2019</div>
+        <div class="edu-kind"><span lang="en">Bachelor's degree</span><span lang="pt">Bacharelado</span><span lang="es">Licenciatura</span></div>
+      </div>
+      <div class="edu-body">
+        <h3 class="edu-degree">
+          <span lang="en">B.Sc. in Computer Science</span>
+          <span lang="pt">Bacharelado em Ciência da Computação</span><span lang="es">Licenciatura en Ciencias de la Computación</span>
+        </h3>
+        <div class="edu-school">Universidade São Judas Tadeu</div>
+        <div class="edu-meta">
+          <span lang="en">São Paulo, Brazil</span><span lang="pt">São Paulo, Brasil</span><span lang="es">São Paulo, Brasil</span>
+          <span class="dot-sep"></span>
+          <span lang="en">Computer Science</span><span lang="pt">Ciência da Computação</span><span lang="es">Ciencias de la Computación</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== CERTIFICATIONS =================================================== -->
+<section class="sec" id="certifications" style="background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker"><span class="num">05</span><span lang="en">Ongoing learning</span><span lang="pt">Formação contínua</span><span lang="es">Formación continua</span></div>
+        <h2 class="sec-title">
+          <span lang="en"><em>Courses.</em></span>
+          <span lang="pt"><em>Cursos.</em></span><span lang="es"><em>Cursos.</em></span>
+        </h2>
+      </div>
+      <p class="sec-lead">
+        <span lang="en">The courses that shaped how I build today: containers and cloud, data, networking, Linux security and software design.</span>
+        <span lang="pt">Os cursos que moldaram a forma como construo hoje: containers e cloud, dados, redes, segurança em Linux e design de software.</span><span lang="es">Los cursos que moldearon la forma en que construyo hoy: contenedores y cloud, datos, redes, seguridad en Linux y diseño de software.</span>
+      </p>
+    </div>
+
+    <div class="cert-grid">
+      <div class="cert"><span class="cert-name">Docker &amp; Amazon ECS</span><span class="cert-issuer">Alura</span></div>
+      <div class="cert"><span class="cert-name">Elasticsearch</span><span class="cert-issuer">Alura</span></div>
+      <div class="cert"><span class="cert-name"><span lang="en">Networking fundamentals, CCNA prep</span><span lang="pt">Fundamentos de redes, preparatório para CCNA</span><span lang="es">Fundamentos de redes, preparatorio para CCNA</span></span><span class="cert-issuer">Alura</span></div>
+      <div class="cert"><span class="cert-name"><span lang="en">Linux &amp; cloud security</span><span lang="pt">Linux &amp; segurança em cloud</span><span lang="es">Linux &amp; seguridad en cloud</span></span><span class="cert-issuer">4Linux</span></div>
+      <div class="cert"><span class="cert-name"><span lang="en">JavaScript, design patterns &amp; MVC</span><span lang="pt">JavaScript, padrões de projeto &amp; MVC</span><span lang="es">JavaScript, patrones de diseño &amp; MVC</span></span><span class="cert-issuer">Alura</span></div>
+      <div class="cert"><span class="cert-name">Ruby on Rails · Lumen · CakePHP</span><span class="cert-issuer">Alura</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== CONTACT =================================================== -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>
+        <span lang="en">Let's build<br/>something <em>worth it.</em></span>
+        <span lang="pt">Vamos construir<br/>algo que <em>valha a pena.</em></span><span lang="es">Construyamos<br/>algo que <em>valga la pena.</em></span>
+      </h2>
+      <p>
+        <span lang="en">Open to conversations about engineering leadership, digital products, scalable platforms and high-impact fullstack work.</span>
+        <span lang="pt">Aberto a conversas sobre liderança técnica, produtos digitais, plataformas escaláveis e trabalho fullstack de alto impacto.</span><span lang="es">Abierto a conversaciones sobre liderazgo técnico, productos digitales, plataformas escalables y trabajo fullstack de alto impacto.</span>
+      </p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/leonardo-siqueira-pessanha" target="_blank" rel="noopener">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/lspessanha" target="_blank" rel="noopener">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =================================================== FOOTER =================================================== -->
+<footer class="foot">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%">
+    <span>© 2026 · Leonardo Siqueira</span>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const themeBtn = document.getElementById('btn-theme');
+  const icon = document.getElementById('icon-sun');
+  const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    themeBtn.setAttribute('aria-pressed', String(t === 'dark'));
+    icon.innerHTML = t === 'dark' ? MOON : SUN;
+  }
+  applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+
+  themeBtn.addEventListener('click', () => {
+    const t = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(t);
+    try { localStorage.setItem('cv-theme', t); } catch (e) {}
+  });
+  document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+  // Nome sugerido do arquivo ao salvar em PDF
+  const pageTitle = document.title;
+  window.addEventListener('beforeprint', () => { document.title = '{{ui.cv}}'; });
+  window.addEventListener('afterprint', () => { document.title = pageTitle; });
+
+  // Smooth scroll + close mobile menu after click
+  const navEl = document.querySelector('nav.nav');
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id && id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: reduceMotion ? 'auto' : 'smooth' });
+          if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+          el.focus({ preventScroll: true });
+        }
+      }
+      if (navEl) { navEl.dataset.open = 'false'; menuBtn && menuBtn.setAttribute('aria-expanded', 'false'); }
+    });
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('btn-menu');
+  if (menuBtn && navEl) {
+    menuBtn.addEventListener('click', () => {
+      const open = navEl.dataset.open !== 'true';
+      navEl.dataset.open = String(open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navEl.dataset.open === 'true') {
+        navEl.dataset.open = 'false';
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.focus();
+      }
+    });
+  }
+
+  // Scrollspy
+  const sections = ['about','experience','skills','education','certifications','contact'].map(id => ({
+    id, el: document.getElementById(id)
+  })).filter(s => s.el);
+  const navLinks = Array.from(document.querySelectorAll('nav.nav a.link'));
+  const linkFor = id => navLinks.find(l => l.dataset.link === id || (id==='certifications' && l.dataset.link==='certs'));
+
+  function updateActive(){
+    const y = window.scrollY + 140;
+    let active = null;
+    for (const s of sections) {
+      const top = s.el.offsetTop;
+      if (y >= top) active = s.id;
+    }
+    navLinks.forEach(l => { l.classList.remove('active'); l.removeAttribute('aria-current'); });
+    if (active) {
+      const link = linkFor(active);
+      if (link) { link.classList.add('active'); link.setAttribute('aria-current', 'location'); }
+    }
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+
+})();
+</script>
+</body>
+</html>

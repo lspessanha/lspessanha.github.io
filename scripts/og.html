@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+@font-face{font-family:"Inter Tight";font-weight:500 700;src:url(../fonts/inter-tight.woff2) format("woff2");}
+@font-face{font-family:"Inter Tight";font-style:italic;font-weight:500;src:url(../fonts/inter-tight-italic.woff2) format("woff2");}
+@font-face{font-family:"JetBrains Mono";font-weight:400 500;src:url(../fonts/jetbrains-mono.woff2) format("woff2");}
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#111113;color:#f1efe8;font-family:"Inter Tight",sans-serif;}
+.c{position:relative;box-sizing:border-box;width:1200px;height:630px;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between;
+background-image:linear-gradient(to right,#27282c 1px,transparent 1px),linear-gradient(to bottom,#27282c 1px,transparent 1px);background-size:56px 56px;}
+.c::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,transparent 20%,#111113 75%);}
+.c>*{position:relative;z-index:1}
+.k{font-family:"JetBrains Mono",monospace;font-size:22px;letter-spacing:.06em;color:#8f8d86;display:flex;align-items:center;gap:14px}
+.k i{width:12px;height:12px;border-radius:50%;background:oklch(62% 0.14 150);display:inline-block}
+h1{font-size:96px;line-height:.95;letter-spacing:-.04em;font-weight:700;margin:0}
+h1 em{font-style:italic;font-weight:500;color:oklch(78% 0.11 265)}
+.r{font-size:34px;color:#c9c7c0;font-weight:500;margin-top:22px;letter-spacing:-.01em}
+.f{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:22px;color:#8f8d86}
+.f b{color:#f1efe8;font-weight:500}
+</style></head><body><div class="c">
+<div class="k"><i></i><span id="k"></span></div>
+<div><h1>Leonardo<br><em>Siqueira</em></h1><div class="r" id="r"></div></div>
+<div class="f"><b>leonardosiqueira.dev.br</b><span id="s"></span></div>
+</div><script>
+const T={pt:["Governo digital · São Paulo, Brasil","Especialista de Produto · Tech Lead · Full Stack Sênior","TypeScript · Node.js · React"],
+en:["Digital government · São Paulo, Brazil","Product Specialist · Tech Lead · Senior Full Stack","TypeScript · Node.js · React"],
+es:["Gobierno digital · São Paulo, Brasil","Especialista de Producto · Tech Lead · Full Stack Senior","TypeScript · Node.js · React"]};
+const t=T[location.hash.slice(1)]||T.pt;k.textContent=t[0];r.textContent=t[1];s.textContent=t[2];
+</script></body></html>
