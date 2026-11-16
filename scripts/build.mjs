@@ -6,7 +6,8 @@ import * as cheerio from 'cheerio';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BASE = 'https://leonardosiqueira.dev.br';
-const today = new Date().toISOString().slice(0, 10);
+const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+const today = now.slice(0, 10);
 
 const LINKS = {
   linkedin: 'https://www.linkedin.com/in/leonardo-siqueira-pessanha',
@@ -64,7 +65,7 @@ function head(code) {
       { '@type': 'WebSite', '@id': `${BASE}/#website`, url: `${BASE}/`, name: 'Leonardo Siqueira', inLanguage: Object.values(LOCALES).map((o) => o.htmlLang) },
       {
         '@type': 'ProfilePage', '@id': `${url}#profilepage`, url, name: l.title, description: l.description,
-        inLanguage: l.htmlLang, isPartOf: { '@id': `${BASE}/#website` }, dateModified: today,
+        inLanguage: l.htmlLang, isPartOf: { '@id': `${BASE}/#website` }, dateModified: now,
         primaryImageOfPage: image, mainEntity: { '@id': `${BASE}/#person` },
       },
       {
